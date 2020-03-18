@@ -12,7 +12,7 @@ TAM_BUFER = 500
 	BYTE "	ANIO:       2020", endl
 	BYTE "	SEMESTRE:   2019-2", endl
 	BYTE "	REALIZADO POR:", endl
-	BYTE "		Cristhian Salazar Jaramillo. CC 1193522656", endl
+	BYTE "		Cristhian Salazar Jaramillo. CC (INSERTE CEDULA)", endl
 	BYTE "		Cristian Jaramillo Herrera. CC (INSERTE CEDULA)", endl
 	BYTE "		Javier Dario. CC (INSERTE CEDULA)", endl
 	BYTE "	DESCRIPCION: ", endl
@@ -34,10 +34,10 @@ TAM_BUFER = 500
 .code
 	main PROC
 	; ------------ bienvenida  ---------------------
-	; Change the console´s name
+	; Change the consoleÂ´s name
 	INVOKE SetConsoleTitle, ADDR cadTitulo
 
-	; Change the text and console´s colors
+	; Change the text and consoleÂ´s colors
 	mov eax,green
 	call SetTextColor
 	call Clrscr
@@ -65,34 +65,34 @@ TAM_BUFER = 500
 	mov manejadorArchivo, eax
 
 	; Comprueba errores.
-	cmp eax, INVALID_HANDLE_VALUE				; ¿error al abrir el archivo ?
+	cmp eax, INVALID_HANDLE_VALUE				; Â¿error al abrir el archivo ?
 	jne archivo_ok							; no: salta
 	mWrite <"No se puede abrir el archivo", 0dh, 0ah>
 	jmp terminar							; y termina
 	archivo_ok :
 
-	; Lee el archivo y lo coloca en un búfer.
+	; Lee el archivo y lo coloca en un bÃºfer.
 	mov edx, OFFSET bufer
 	mov ecx, TAM_BUFER
 	call ReadFromFile
-	jnc comprobar_tamanio_bufer				; ¿error al leer ?
-	mWrite "Error al leer el archivo"			; sí: muestra mensaje de error
+	jnc comprobar_tamanio_bufer				; Â¿error al leer ?
+	mWrite "Error al leer el archivo"			; sÃ­: muestra mensaje de error
 	call WriteWindowsMsg
 	jmp cerrar_archivo
 	comprobar_tamanio_bufer :
-	cmp eax, TAM_BUFER						; ¿el búfer es lo bastante grande ?
-	jb tam_buf_ok							; sí
+	cmp eax, TAM_BUFER						; Â¿el bÃºfer es lo bastante grande ?
+	jb tam_buf_ok							; sÃ­
 	mWrite <"Error: Bufer demasiado chico para el archivo", 0dh, 0ah>
 	jmp terminar							; y termina
 	tam_buf_ok :
 	mov bufer[eax], 0						; inserta terminador nulo
 	mWrite "Tamanio del archivo: "
-	call WriteDec							; muestra el tamaño del archivo
+	call WriteDec							; muestra el tamaÃ±o del archivo
 	call Crlf
 
-	; Muestra el búfer.
+	; Muestra el bÃºfer.
 	mWrite <"Bufer:", 0dh, 0ah, 0dh, 0ah>
-	mov edx, OFFSET bufer					; muestra el búfer
+	mov edx, OFFSET bufer					; muestra el bÃºfer
 	call WriteString
 	call Crlf
 	cerrar_archivo :
