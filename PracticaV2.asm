@@ -12,7 +12,7 @@ TAM_BUFER = 500
 	BYTE "	ANIO:       2020", endl
 	BYTE "	SEMESTRE:   2019-2", endl
 	BYTE "	REALIZADO POR:", endl
-	BYTE "		Cristhian Salazar Jaramillo. CC 1193522656", endl
+	BYTE "		Cristhian Salazar Jaramillo. CC (INSERTE CEDULA)", endl
 	BYTE "		Cristian Jaramillo Herrera. CC (INSERTE CEDULA)", endl
 	BYTE "		Javier Dario. CC (INSERTE CEDULA)", endl
 	BYTE "	DESCRIPCION: ", endl
@@ -69,7 +69,7 @@ TAM_BUFER = 500
 	mov manejadorArchivo, eax
 
 	; Comprueba errores.
-	cmp eax, INVALID_HANDLE_VALUE		; ¿error al abrir el archivo ?
+	cmp eax, INVALID_HANDLE_VALUE		; error al abrir el archivo ?
 	jne archivo_ok					; no: salta
 	mWrite <"No se puede abrir el archivo", 0dh, 0ah>
 	jmp terminar					; y termina
@@ -79,8 +79,8 @@ TAM_BUFER = 500
 	mov edx, OFFSET bufer
 	mov ecx, TAM_BUFER
 	call ReadFromFile
-	jnc comprobar_tamanio_bufer		; ¿error al leer ?
-	mWrite "Error al leer el archivo"	; sí: muestra mensaje de error
+	jnc comprobar_tamanio_bufer		; error al leer ?
+	mWrite "Error al leer el archivo"	; se muestra mensaje de error
 	call WriteWindowsMsg
 	jmp cerrar_archivo
 	comprobar_tamanio_bufer :
@@ -91,12 +91,12 @@ TAM_BUFER = 500
 	tam_buf_ok :
 	mov bufer[eax], 0				; inserta terminador nulo
 	mWrite "Tamanio del archivo: "
-	call WriteDec					; muestra el tamaño del archivo
+	call WriteDec					; muestra el tamano del archivo
 	call Crlf
 
 	; Muestra el búfer.
 	mWrite <"Bufer:", 0dh, 0ah, 0dh, 0ah>
-	mov edx, OFFSET bufer			; muestra el búfer
+	mov edx, OFFSET bufer			; muestra el bufer
 	call WriteString
 	call Crlf
 	cerrar_archivo :
